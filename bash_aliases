@@ -292,7 +292,7 @@ setup_vimrc() {
 
     [ "$(uname)" = "Darwin" ] || [ "$(uname -a | grep -c Linux)" -eq 1 ] || (echo  "Distribution not currently supported." && return 1)
 
-    if [ "$(uname)" = "Darwin" ] && ! $(command -v brew &> /dev/null) && echo "macOS requires Homebrew to install dev environment." && return 1
+    [ "$(uname)" = "Darwin" ] && ! $(command -v brew &> /dev/null) && echo "macOS requires Homebrew to install dev environment." && return 1
 
     # install pip
     if $(command -v pip3 &> /dev/null); then
