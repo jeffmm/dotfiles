@@ -248,7 +248,6 @@ setup_vimrc() {
           # Need latest node version
           curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
           apt install -y nodejs
-          apt install -y npm
       fi
     }
     installvim() {
@@ -319,6 +318,6 @@ setup_vimrc() {
 
     npm install coc-explorer coc-snippets coc-json \
              --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
-    vim +PlugInstall +qall
+    vim -E -s -u ~/.vimrc +PlugInstall +qall
     echo "Environment setup complete."
 }

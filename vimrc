@@ -304,7 +304,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 " let g:airline_skip_empty_sections = 1
 
-let g:airline_section_c = airline#section#create([''])
+silent! let g:airline_section_c = airline#section#create([''])
 
 " Switch to your current theme
 let g:airline_theme = 'gruvbox_material'
@@ -565,7 +565,7 @@ let g:which_key_map.T = {
       \ }
 
 " Register which key map
-call which_key#register('<Space>', "g:which_key_map")
+silent! call which_key#register('<Space>', "g:which_key_map")
 
 "
 " RANGER SETTINGS
