@@ -8,13 +8,27 @@ alias vi='vim'
 # alias vim="nvim"
 alias octave="octave --no-gui-libs"
 alias gst="git status"
-# alias pip="pip-pss"
 alias dps='docker ps --format "table {{.Names}}\t{{.Ports}}"'
 alias cdp="cd ~/Projects"
 
-export PYPI_SIMPLE_SEARCH="ag"
+# Check if pypi-simple-search is installed
+if $(which pip-pss > /dev/null); then
+    alias pip="pip-pss"
+fi
+
+
+export PYPI_SIMPLE_SEARCH="rg"
 
 #Functions
+
+# Command for setting up vim environment on ubuntu machines
+copy_env_setup() {
+    echo "apt update && apt install -y git python3-pip && \
+        pip install rc4me && \
+        rc4me apply jeffmm/dotfiles && \
+        source ~/.bash_profile && \
+        setup_vimrc" | pbcopy
+}
 
 # Open a browser an log in to AWS with SSO
 alias sso='open https://manifold.awsapps.com/start#/'

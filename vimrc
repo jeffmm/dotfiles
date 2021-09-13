@@ -117,7 +117,7 @@ set shortmess+=c                        " Don't pass messages to |ins-completion
 set signcolumn=yes                      " Always show the signcolumn, otherwise it would shift the text each time
 set updatetime=50                       " Faster completion
 set timeoutlen=100                      " By default timeoutlen is 1000 ms
-" set clipboard=unnamedplus               " Copy paste between vim and everything else
+set clipboard=unnamed                   " Copy paste between vim and everything else
 set incsearch                           " Allow finding search results
 set nohlsearch                          " Don't highlight search results by default
 set colorcolumn=88                      " Get a nice visualization where lw=88
