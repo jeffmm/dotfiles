@@ -125,6 +125,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 set guifont=Hack\ Nerd\ Font
 set iskeyword+=-                      	" treat dash separated words as a word text object
 autocmd FileType * setlocal formatoptions-=cor  " Properly wrap comments
+set backspace=indent,eol,start          " enable backspace
 
 if has('python3')
     set pyx=3
@@ -136,6 +137,12 @@ augroup vimrc-incsearch-highlight
     autocmd CmdlineEnter /,\? :set hlsearch
     autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
+
+" Block cursor in iterm
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
 
 "
 " MAPPINGS
