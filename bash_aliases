@@ -308,5 +308,8 @@ setup_vimrc() {
     else
         installpackages
     fi
+    npm install coc-explorer coc-snippets coc-json \
+             --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
+    vim +PlugInstall +qall
     echo "Environment setup complete."
 }
