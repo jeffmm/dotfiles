@@ -230,7 +230,7 @@ dexec() {
 setup_vimrc() {
     installpip() {
       echo "Installing pip..."
-      if [ "$(uname)" = "Darwin" ]; then 
+      if [ "$(uname)" = "Darwin" ]; then
           brew install python@3.8
       elif [ "$(uname -a | grep -c Linux)" -eq 1 ]; then
           apt update
@@ -241,13 +241,14 @@ setup_vimrc() {
       echo "Installing node..."
       if [ "$(uname)" = "Darwin" ]; then
           brew install lua
-          brew install node
+          brew install npm
           brew install yarn
       elif [  "$(uname -a | grep -c Linux)" -eq 1 ]; then
           apt update
           # Need latest node version
           curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-          apt install -y nodejs npm
+          apt install -y nodejs
+          apt install -y npm
       fi
     }
     installvim() {
@@ -284,9 +285,22 @@ setup_vimrc() {
         installpip
     fi
 
-    # install node and neovim support
-    if $(which node > /dev/null); then 
-        echo "node detected, moving on..."
+    if $(which git > /dev/null) && $(which curl > /dev/null) && $(which rg > /dev/null) && $(which fzf > /dev/null) && $(which ranger > /dev/null); then
+        echo "git, curl, ripgrep, fzf, and ranger detected, moving on..."
+    else
+        installpackages
+    fi
+
+    # install node
+    if $(which node > /dev/null); then
+        if [ $(node --version | grep -cE "v1[3-9]|v2[0-9]") -eq 1 ]; then
+            echo "node detected, moving on..."
+        elif [ "$(uname -a | grep -c Linux)" -eq 1 ]; then
+            apt remove -y nodejs
+            installnode
+        elif [ "$(uname)" = "Darwin" ]; then
+            brew reinstall npm
+        fi
     else
         installnode
     fi
@@ -303,11 +317,6 @@ setup_vimrc() {
         installvim
     fi
 
-    if $(which git > /dev/null) && $(which curl > /dev/null) && $(which rg > /dev/null) && $(which fzf > /dev/null) && $(which ranger > /dev/null); then
-        echo "git, curl, ripgrep, fzf, and ranger detected, moving on..."
-    else
-        installpackages
-    fi
     npm install coc-explorer coc-snippets coc-json \
              --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
     vim +PlugInstall +qall
