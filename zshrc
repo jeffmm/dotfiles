@@ -18,6 +18,14 @@ antigen apply
 
 # Enable colors and change prompt:
 
+export EDITOR=nvim
+export VISUAL=nvim
+# export CLICOLOR=1
+# export LSCOLORS=ExFxCxDxBxegedabagacad
+# export GPG_TTY=$(tty)
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
+
 autoload -U colors && colors
 PS1="\u:\W$ "
 PS1="%B%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
@@ -98,6 +106,26 @@ bindkey "^R" history-incremental-search-backward
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-if [ -e ~/.bash_aliases ]; then
+if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
+fi
+
+if [ -f ~/.bash_local ]; then
+    source ~/.bash_local
+fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+
+# Timezones
+export TZ=America/Denver
+if [ ! -f /etc/timezone ]; then
+    # Check if we need sudo (not on a docker container)
+    if $(which sudo > /dev/null); then
+        sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+        sudo echo $TZ > /etc/timezone
+    else
+        ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+        echo $TZ > /etc/timezone
+    fi
 fi
