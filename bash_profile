@@ -49,5 +49,9 @@ fi
 
 # Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
 if [ ! -f ~/.vim/snips/python.snippets ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
-    cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
+    if [ -d ~/.vim/snips ]; then
+        cp ~/.rc4me/jeffmm_dotfiles/snips/* ~/.vim/snips
+    else
+        cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
+    fi
 fi
