@@ -48,6 +48,6 @@ if [ ! -f ~/.timezone ]; then
 fi
 
 # Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
-if [ ! -d ~/.vim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
+if [ ! -f ~/.vim/snips/python.snippets ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
     cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
 fi
