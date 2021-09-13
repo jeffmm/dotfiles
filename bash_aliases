@@ -12,7 +12,7 @@ alias dps='docker ps --format "table {{.Names}}\t{{.Ports}}"'
 alias cdp="cd ~/Projects"
 
 # Check if pypi-simple-search is installed
-if $(which pip-pss > /dev/null); then
+if $(command -v pip-pss &> /dev/null); then
     alias pip="pip-pss"
 fi
 
@@ -245,46 +245,44 @@ setup_vimrc() {
     installpip() {
       echo "Installing pip..."
       if [ "$(uname)" = "Darwin" ]; then
-          brew install python@3.8
+          brew install python@3.8 > /dev/null
       elif [ "$(uname -a | grep -c Linux)" -eq 1 ]; then
-          apt update
+          apt update > /dev/null
           apt install -y python3-pip > /dev/null
       fi
     }
     installpippackages() {
       echo "Installing pip packages..."
-      pip3 install black flake8 ranger-fm
+      pip3 install black flake8 ranger-fm > /dev/null
     }
     installnode() {
       echo "Installing node..."
       if [ "$(uname)" = "Darwin" ]; then
-          brew install lua
-          brew install npm
-          brew install yarn
+          brew install lua npm yarn > /dev/null
       elif [  "$(uname -a | grep -c Linux)" -eq 1 ]; then
-          apt update
+          apt update > /dev/null
           # Need latest node version
-          curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-          apt install -y nodejs
+          curl -fsSL https://deb.nodesource.com/setup_current.x | bash - > /dev/null
+          apt install -y nodejs > /dev/null
       fi
     }
     installvim() {
       echo "Installing vim version >=8.1..."
       if [ "$(uname)" = "Darwin" ]; then
-          brew install vim
+          brew install vim > /dev/null
       elif [ "$(uname -a | grep -c Linux)" -eq 1 ]; then
-          apt update
-          apt install -y vim
+          apt update > /dev/null
+          apt install -y vim > /dev/null
       fi
       return 0
     }
     installpackages() {
         if [ "$(uname)" = "Darwin" ]; then
             # Don't reinstall curl on Mac
-            brew install git ripgrep fzf
+            brew install git ripgrep fzf > /dev/null
         elif [  "$(uname -a | grep -c Linux)" -eq 1 ]; then
-            apt update
-            apt install -y git curl ripgrep fzf
+            apt update > /dev/null
+            apt install -y git curl ripgrep fzf > /dev/null
         fi
     }
 
@@ -294,19 +292,21 @@ setup_vimrc() {
 
     [ "$(uname)" = "Darwin" ] || [ "$(uname -a | grep -c Linux)" -eq 1 ] || (echo  "Distribution not currently supported." && return 1)
 
+    if [ "$(uname)" = "Darwin" ] && ! $(command -v brew &> /dev/null) && echo "macOS requires Homebrew to install dev environment." && return 1
+
     # install pip
-    if $(which pip3 > /dev/null); then
+    if $(command -v pip3 &> /dev/null); then
         echo "pip detected, moving on..."
     else
         installpip
     fi
 
     # Standardize python binary location
-    if $(which python3) && [ ! -f /usr/local/bin/python ]; then
-        ln -s $(which python3) /usr/local/bin/python
+    if $(command -v python3 &> /dev/null) && [ ! -f /usr/local/bin/python ]; then
+        ln -s $(command -v python3) /usr/local/bin/python
     fi
 
-    if $(which git > /dev/null) && $(which curl > /dev/null) && $(which rg > /dev/null) && $(which fzf > /dev/null); then
+    if $(command -v git &> /dev/null) && $(command -v curl &> /dev/null) && $(command -v rg &> /dev/null) && $(command -v fzf &> /dev/null); then
         echo "git, curl, ripgrep, and fzf detected, moving on..."
     else
         installpackages
@@ -314,21 +314,21 @@ setup_vimrc() {
     installpippackages
 
     # install node
-    if $(which node > /dev/null); then
+    if $(command -v node &> /dev/null); then
         if [ $(node --version | grep -cE "v1[3-9]|v2[0-9]") -eq 1 ]; then
             echo "node detected, moving on..."
         elif [ "$(uname -a | grep -c Linux)" -eq 1 ]; then
-            apt remove -y nodejs
+            apt remove -y nodejs > /dev/null
             installnode
         elif [ "$(uname)" = "Darwin" ]; then
-            brew reinstall npm
+            brew reinstall npm > /dev/null
         fi
     else
         installnode
     fi
 
     # install vim
-    if $(which vim > /dev/null); then
+    if $(command -v vim &> /dev/null); then
         # Check vim version
         if [ $(vim --version | head -n 1 | grep -cE "IMproved 8.[1-9]") -eq 1 ]; then
             echo "vim version >=8.1 detected, moving on..."
