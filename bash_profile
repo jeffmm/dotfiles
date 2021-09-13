@@ -23,6 +23,7 @@ if $(which terraform > /dev/null); then
 fi
 
 if [ ! -f ~/.vim/coc-settings.json ]; then
+    mkdir -p ~/.vim
     if [ -f ~/.coc-settings.json ]; then
         cp ~/.coc-settings.json ~/.vim/coc-settings.json
     fi
