@@ -251,6 +251,10 @@ setup_vimrc() {
           apt install -y python3-pip > /dev/null
       fi
     }
+    installpippackages() {
+      echo "Installing pip packages..."
+      pip3 install black flake8 ranger-fm
+    }
     installnode() {
       echo "Installing node..."
       if [ "$(uname)" = "Darwin" ]; then
@@ -278,10 +282,9 @@ setup_vimrc() {
         if [ "$(uname)" = "Darwin" ]; then
             # Don't reinstall curl on Mac
             brew install git ripgrep fzf
-            pip3 install ranger-fm
         elif [  "$(uname -a | grep -c Linux)" -eq 1 ]; then
             apt update
-            apt install -y git curl ripgrep fzf ranger
+            apt install -y git curl ripgrep fzf
         fi
     }
 
@@ -298,11 +301,17 @@ setup_vimrc() {
         installpip
     fi
 
-    if $(which git > /dev/null) && $(which curl > /dev/null) && $(which rg > /dev/null) && $(which fzf > /dev/null) && $(which ranger > /dev/null); then
-        echo "git, curl, ripgrep, fzf, and ranger detected, moving on..."
+    # Standardize python binary location
+    if $(which python3) && [ ! -f /usr/local/bin/python ]; then
+        ln -s $(which python3) /usr/local/bin/python
+    fi
+
+    if $(which git > /dev/null) && $(which curl > /dev/null) && $(which rg > /dev/null) && $(which fzf > /dev/null); then
+        echo "git, curl, ripgrep, and fzf detected, moving on..."
     else
         installpackages
     fi
+    installpippackages
 
     # install node
     if $(which node > /dev/null); then

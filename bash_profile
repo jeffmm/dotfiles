@@ -46,3 +46,8 @@ if [ ! -f ~/.timezone ]; then
     fi
     echo $TZ > ~/.timezone
 fi
+
+# Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
+if [ ! -d ~/.vim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
+    cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
+fi

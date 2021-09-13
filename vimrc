@@ -33,7 +33,9 @@ call plug#begin('~/.vim/autoload/plugged')
   " Status line and tab line
   Plug 'vim-airline/vim-airline'
   Plug 'mg979/vim-xtabline'
-  Plug 'kevinhwang91/rnvimr'
+  " Ranger
+  Plug 'francoiscabrol/ranger.vim'
+  Plug 'rbgrouleff/bclose.vim'
   " FZF
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -368,7 +370,7 @@ let g:which_key_map['h'] = [ '<C-W>s'                             , 'split below
 let g:which_key_map['m'] = [ ':call WindowSwap#EasyWindowSwap()'  , 'move window' ]
 let g:which_key_map['p'] = [ ':Files'                             , 'search files' ]
 let g:which_key_map['q'] = [ 'q'                                  , 'quit' ]
-" let g:which_key_map['r'] = [ ':RnvimrToggle'                      , 'ranger' 
+let g:which_key_map['r'] = [ ':Ranger'                            , 'ranger' ]
 let g:which_key_map['u'] = [ ':UndotreeToggle'                    , 'undo tree']
 let g:which_key_map['Z'] = [ 'Goyo'                               , 'zen' ]
 
@@ -558,32 +560,8 @@ silent! call which_key#register('<Space>', "g:which_key_map")
 "
 " RANGER SETTINGS
 "
-" Make Ranger replace netrw and be the file explorer
-let g:rnvimr_ex_enable = 1
-
-let g:rnvimr_draw_border = 1
-
-" Make Ranger to be hidden after picking a file
-let g:rnvimr_pick_enable = 1
-
-" Make Neovim to wipe the buffers corresponding to the files deleted by Ranger
-let g:rnvimr_bw_enable = 1
-
-" nmap <leader>r :RnvimrToggle<CR>
-
-let g:rnvimr_ranger_cmd = 'ranger --cmd="set column_ratios 1,1"'
-            " \ --cmd="set draw_borders separators"'
-
-" let g:rnvimr_layout = { 'relative': 'editor',
-"             \ 'width': float2nr(round(0.6 * &columns)),
-"             \ 'height': float2nr(round(0.6 * &lines)),
-"             \ 'col': float2nr(round(0.2 * &columns)),
-"             \ 'row': float2nr(round(0.2 * &lines)),
-"             \ 'style': 'minimal' }
-
-let g:rnvimr_presets = [
-            \ {'width': 0.800, 'height': 0.800}]
-
+let g:ranger_map_keys = 0
+let g:ranger_replace_netrw = 1
 "
 " FZF SETTINGS
 "
