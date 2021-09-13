@@ -374,25 +374,6 @@ let g:which_key_map['Z'] = [ 'Goyo'                               , 'zen' ]
 
 " Group mappings
 
-" a is for actions
-let g:which_key_map.a = {
-      \ 'name' : '+actions' ,
-      \ 'c' : [':ColorizerToggle'        , 'colorizer'],
-      \ 'e' : [':CocCommand explorer'    , 'explorer'],
-      \ 'l' : [':Bracey'                 , 'start live server'],
-      \ 'L' : [':BraceyStop'             , 'stop live server'],
-      \ 'm' : [':MarkdownPreview'        , 'markdown preview'],
-      \ 'M' : [':MarkdownPreviewStop'    , 'markdown preview stop'],
-      \ 'n' : [':set nonumber!'          , 'line-numbers'],
-      \ 'r' : [':set norelativenumber!'  , 'relative line nums'],
-      \ 's' : [':let @/ = ""'            , 'remove search highlight'],
-      \ 't' : [':FloatermToggle'         , 'terminal'],
-      \ 'v' : [':Codi'                   , 'virtual repl on'],
-      \ 'V' : [':Codi!'                  , 'virtual repl off'],
-      \ 'w' : [':StripWhitespace'        , 'strip whitespace'],
-      \ 'd' : ['']
-      \ }
-
 " b is for buffer
 let g:which_key_map.b = {
       \ 'name' : '+buffer' ,
@@ -621,7 +602,7 @@ let g:fzf_buffers_jump = 1
 
 let g:fzf_tags_command = 'ctags -R'
 " Border color
-let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
+let g:fzf_layout = {'down':'~40%'}
 
 let $FZF_DEFAULT_OPTS = '--layout=reverse --inline-info'
 let $FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/**' -g '!*.{ipynb,jpg,png,pdf}'"
@@ -959,11 +940,13 @@ let g:floaterm_keymap_prev   = '<F3>'
 let g:floaterm_keymap_new    = '<F4>'
 
 let g:floaterm_gitcommit='floaterm'
+let g:floaterm_wintype='split'
+let g:floaterm_shell='bash'
 let g:floaterm_autoinsert=1
-let g:floaterm_width=0.8
-let g:floaterm_height=0.8
+let g:floaterm_width=0.4
+let g:floaterm_height=0.4
 let g:floaterm_wintitle=0
-let g:floaterm_autoclose=1"
+let g:floaterm_autoclose=1
 
 "
 " XTABLINE
