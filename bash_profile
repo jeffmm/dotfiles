@@ -18,7 +18,7 @@ if [ -f ~/.bash_local ]; then
     source ~/.bash_local
 fi
 
-if $(which terraform > /dev/null); then
+if $(command -v terraform &> /dev/null); then
     complete -C /usr/local/bin/terraform terraform
 fi
 
@@ -33,7 +33,7 @@ fi
 export TZ=America/Denver
 if [ ! -f ~/.timezone ]; then
     # Check if we need sudo (not on a docker container)
-    if $(which sudo > /dev/null); then
+    if $(command -v sudo &> /dev/null); then
         sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
         if [ ! "$(uname)" = "Darwin" ]; then
             sudo echo $TZ > /etc/timezone
