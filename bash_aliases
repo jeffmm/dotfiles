@@ -253,7 +253,7 @@ setup_vimrc() {
     }
     installpippackages() {
       echo "Installing pip packages..."
-      pip3 install black flake8 ranger-fm > /dev/null
+      pip3 install black isort mypy flake8 ranger-fm > /dev/null
     }
     installnode() {
       echo "Installing node..."

@@ -33,7 +33,6 @@ call plug#begin('~/.vim/autoload/plugged')
   " Status line and tab line
   Plug 'vim-airline/vim-airline'
   Plug 'mg979/vim-xtabline'
-  " Ranger
   Plug 'francoiscabrol/ranger.vim'
   Plug 'rbgrouleff/bclose.vim'
   " FZF
@@ -394,7 +393,7 @@ let g:which_key_map.b = {
 let g:which_key_map.f = {
       \ 'name' : '+find&replace' ,
       \ 'b' : [':Farr --source=vimgrep'    , 'buffer'],
-      \ 'p' : [':Farr --source=rgnvim'     , 'project'],
+      \ 'p' : [':Farr --source=ranger'     , 'project'],
       \ }
 
 :command! InsertDate :normal "=strftime("## %Y%m%d %A")<CR>P
@@ -970,7 +969,7 @@ let g:xtabline_settings.icons = {
 "
 " FAR
 "
-let g:far#source='rgnvim'
+let g:far#source='ranger'
 " let g:far#source='rg'
 " let g:far#source='vimgrep'
 " let g:far#source='ag'
