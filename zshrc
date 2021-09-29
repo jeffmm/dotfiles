@@ -95,6 +95,8 @@ bindkey "^R" history-incremental-search-backward
 [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
+autoload -U +X bashcompinit && bashcompinit
+#
 # Load zsh-syntax-highlighting; should be last.
 # source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
@@ -114,18 +116,41 @@ if [ -f ~/.bash_local ]; then
     source ~/.bash_local
 fi
 
-autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+if $(command -v terraform &> /dev/null); then
+    complete -C /usr/local/bin/terraform terraform
+fi
+
+if [ ! -f ~/.vim/coc-settings.json ]; then
+    mkdir -p ~/.vim
+    if [ -f ~/.coc-settings.json ]; then
+        cp ~/.coc-settings.json ~/.vim/coc-settings.json
+    fi
+fi
+
+# Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
+if [ ! -f ~/.vim/snips/python.snippets ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
+    if [ -d ~/.vim/snips ]; then
+        cp ~/.rc4me/jeffmm_dotfiles/snips/* ~/.vim/snips
+    else
+        cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
+    fi
+fi
 
 # Timezones
 export TZ=America/Denver
-if [ ! -f /etc/timezone ]; then
+if [ ! -f ~/.timezone ]; then
     # Check if we need sudo (not on a docker container)
-    if $(which sudo > /dev/null); then
+    if $(command -v sudo &> /dev/null); then
         sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
-        sudo echo $TZ > /etc/timezone
+        if [ ! "$(uname)" = "Darwin" ]; then
+            sudo echo $TZ > /etc/timezone
+        fi
     else
         ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
-        echo $TZ > /etc/timezone
+        if [ ! "$(uname)" = "Darwin" ]; then
+            echo $TZ > /etc/timezone
+        fi
     fi
+    echo $TZ > ~/.timezone
 fi
