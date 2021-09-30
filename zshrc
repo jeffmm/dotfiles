@@ -18,8 +18,8 @@ antigen apply
 
 # Enable colors and change prompt:
 
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 # export CLICOLOR=1
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 # export GPG_TTY=$(tty)
