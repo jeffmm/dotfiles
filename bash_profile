@@ -36,7 +36,7 @@ if [ ! -f ~/.timezone ]; then
     if $(command -v sudo &> /dev/null); then
         sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
         if [ ! "$(uname)" = "Darwin" ]; then
-            sudo echo $TZ > /etc/timezone
+            sudo sh -c "echo $TZ > /etc/timezone"
         fi
     else
         ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
