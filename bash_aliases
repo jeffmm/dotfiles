@@ -1,8 +1,14 @@
  
 #Aliases
+if [ "$(uname)" = "Darwin" ]; then
+    alias ll="ls -l"
+    alias la="ls -la"
+else
+    alias ls="ls --color"
+    alias ll="ls -l --color"
+    alias la="ls -la --color"
+fi
 alias glog="git log --pretty=format:'%C(yellow)%h %Cred%an %Cblue%ad %Cgreen%d %Creset%s' --date=relative --graph"
-alias ll="ls -l"
-alias la="ls -la"
 alias tn="tail nohup.out"
 alias vi='vim'
 # alias vim="nvim"
@@ -15,7 +21,6 @@ alias cdp="cd ~/Projects"
 if $(command -v pip-pss &> /dev/null); then
     alias pip="pip-pss"
 fi
-
 
 export PYPI_SIMPLE_SEARCH="rg"
 
