@@ -1,7 +1,7 @@
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 export GPG_TTY=$(tty)
@@ -20,6 +20,19 @@ fi
 
 if $(command -v terraform &> /dev/null); then
     complete -C /usr/local/bin/terraform terraform
+fi
+
+if [ ! -f ~/.config/nvim/init.vim ]; then
+    mkdir -p ~/.config/nvim
+    if [ -f ~/.nvim_init ]; then
+        cp ~/.nvim_init ~/.config/nvim/init.vim
+    fi
+fi
+
+if [ ! -f ~/.config/nvim/coc-settings.json ]; then
+    if [ -f ~/.coc-settings.json ]; then
+        cp ~/.coc-settings.json ~/.config/nvim/coc-settings.json
+    fi
 fi
 
 if [ ! -f ~/.vim/coc-settings.json ]; then
