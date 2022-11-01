@@ -658,7 +658,7 @@ let g:codi#aliases = {
 
 let g:codi#interpreters = {
     \ 'python': {
-        \ 'bin': 'python3',
+        \ 'bin': '/opt/homebrew/bin/python3',
         \ 'prompt': '^\(>>>\|\.\.\.\) ',
         \ }
     \ }
