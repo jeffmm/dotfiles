@@ -20,9 +20,9 @@ antigen apply
 
 export EDITOR=vim
 export VISUAL=vim
-# export CLICOLOR=1
-# export LSCOLORS=ExFxCxDxBxegedabagacad
-# export GPG_TTY=$(tty)
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+export GPG_TTY=$(tty)
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
 
@@ -31,8 +31,11 @@ PS1="\u:\W$ "
 PS1="%B%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
-HISTSIZE=10000
-SAVEHIST=10000
+setopt share_history
+setopt inc_append_history
+setopt hist_ignore_all_dups
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
 HISTFILE=~/.cache/zsh/history
 
 # Basic auto/tab complete:

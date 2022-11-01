@@ -9,6 +9,7 @@ else
     alias la="ls -la --color"
 fi
 alias glog="git log --pretty=format:'%C(yellow)%h %Cred%an %Cblue%ad %Cgreen%d %Creset%s' --date=relative --graph"
+alias gb="git branch -v --sort=-committerdate"
 alias tn="tail nohup.out"
 alias vi='vim'
 # alias vim="nvim"
