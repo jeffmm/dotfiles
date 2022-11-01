@@ -19,8 +19,12 @@ call plug#begin('~/.vim/autoload/plugged')
   " Have the file system follow you around
   Plug 'airblade/vim-rooter'
   " Note taking
-  Plug 'vimwiki/vimwiki', {'branch': 'master'}
-  Plug 'jeffmm/vim-roam'
+  " Plug 'lervag/wiki.vim'
+  " Plug 'jeffmm/vimroam'
+  " Plug 'vimwiki/vimwiki', {'branch': 'dev'}
+  Plug '/Users/jeff/Projects/wikivim-roam'
+  " Encryption
+  Plug '/Users/jeff/Projects/crypt.vim'
   " Text Navigation
   Plug 'easymotion/vim-easymotion'
   " Cool Icons
@@ -65,7 +69,8 @@ call plug#begin('~/.vim/autoload/plugged')
   " Swap windows
   Plug 'wesQ3/vim-windowswap'
   " Markdown Preview
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & npm install'  }
+  Plug 'gabrielelana/vim-markdown'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
   " Easily create Gists
   Plug 'mattn/webapi-vim'
   Plug 'mattn/vim-gist'
@@ -207,55 +212,6 @@ nnoremap <silent> <M-l>    :vertical resize +2<CR>
 " inoremap <expr> <c-j> ("\<C-n>")
 " inoremap <expr> <c-k> ("\<C-p>")
 
-"
-" ENCRYPTION
-"
-" Don't save backups of *.gpg files
-set backupskip+=*.gpg,*.asc
-
-augroup encrypted
-  au!
-  " Disable swap files, viminfo, and set binary file format before reading the file
-  autocmd BufReadPre,FileReadPre *.gpg,*.asc
-              \ set viminfo= |
-              \ setlocal noswapfile
-  autocmd BufReadPre,FileReadPre *.gpg setlocal bin
-  " Decrypt the contents after reading the file, reset binary file format
-  " and run any BufReadPost autocmds matching the file name without the .gpg
-  " extension
-  autocmd BufReadPost,FileReadPost *.gpg,*.asc
-              \ execute "'[,']!gpg --decrypt --default-recipient-self 2> /dev/null" |
-              \ setlocal nobin |
-              \ execute "doautocmd BufReadPost " . expand("%:r")
-  " Set binary file format and encrypt the contents before writing the file
-  autocmd BufWritePre,FileWritePre *.gpg,*.asc
-              \ let window_view=winsaveview()
-  autocmd BufWritePre,FileWritePre *.gpg
-              \ setlocal bin |
-              \ execute "'[,']!gpg --encrypt --default-recipient-self 2> /dev/null"
-  autocmd BufWritePre,FileWritePre *.asc
-              \ execute "'[,']!gpg --encrypt --armor --default-recipient-self 2> /dev/null"
-  " After writing the file, do an :undo to revert the encryption in the
-  " buffer, and reset binary file format
-  autocmd BufWritePost,FileWritePost *.gpg,*.asc
-              \ silent u |
-              \ setlocal nobin |
-              \ call winrestview(window_view) |
-              \ let window_view=""
-augroup END
-
-"
-" MARKDOWN SETTINGS
-"
-"Turn spellcheck on for markdown files
-augroup auto_spellcheck
-   autocmd!
-   autocmd BufNewFile,BufRead *.md setlocal spell wrap linebreak
-   autocmd BufNewFile,BufRead *.md nnoremap <buffer> j gj
-   autocmd BufNewFile,BufRead *.md nnoremap <buffer> k gk
-   autocmd BufNewFile,BufRead *.md xnoremap <buffer> j gj
-   autocmd BufNewFile,BufRead *.md xnoremap <buffer> k gk
-augroup END
 
 "
 " THEME SETTINGS
@@ -364,9 +320,9 @@ let g:which_key_map['='] = [ '<C-W>='                             , 'balance win
 " let g:which_key_map['d'] = [ '"=strftime("## %Y%m%d %A")<CR>P'    , 'insert date']
 let g:which_key_map['e'] = [ ':CocCommand explorer'               , 'explorer' ]
 " let g:which_key_map['f'] = [ ':Farr'                              , 'find and replace' ]
-let g:which_key_map['h'] = [ '<C-W>s'                             , 'split below']
+" let g:which_key_map['h'] = [ '<C-W>s'                             , 'split below']
 " let g:which_key_map['k'] = [ ':call <SID>show_documentation()<CR>'    , 'show documentation']
-let g:which_key_map['m'] = [ ':call WindowSwap#EasyWindowSwap()'  , 'move window' ]
+" let g:which_key_map['m'] = [ ':call WindowSwap#EasyWindowSwap()'  , 'move window' ]
 let g:which_key_map['p'] = [ ':Files'                             , 'search files' ]
 let g:which_key_map['q'] = [ 'q'                                  , 'quit' ]
 let g:which_key_map['r'] = [ ':Ranger'                            , 'ranger' ]
@@ -553,6 +509,19 @@ let g:which_key_map.T = {
       \ 'x' : [':XTabPinBuffer'           , 'pin buffer'],
       \ }
 
+let g:which_key_map.w = {
+            \ 'name' : '+wiki',
+            \ 'w': ['<plug>(wiki-index)'    , 'wiki index'],
+            \ 'n': ['<plug>(wiki-open)'     , 'open/new wiki'],
+            \ 'x': ['<plug>(wiki-reload)'   , 'reload wiki'],
+            \ }
+
+let g:which_key_map.m = {
+            \ 'name' : '+markdown',
+            \ 'p' : [':MarkdownPreview'     , 'preview'],
+            \ 'x' : [':call markdown#SwitchStatus()<CR>'    , 'checklist'],
+            \ }
+
 " Register which key map
 silent! call which_key#register('<Space>', "g:which_key_map")
 
@@ -658,41 +627,66 @@ let g:codi#aliases = {
 
 let g:codi#interpreters = {
     \ 'python': {
-        \ 'bin': '/opt/homebrew/bin/python3',
+        \ 'bin': 'python3',
         \ 'prompt': '^\(>>>\|\.\.\.\) ',
         \ }
     \ }
 
 "
-" VIMWIKI SETTINGS
-let s:vimwiki_dir = "~/.vim/roam/"
-let s:vimwiki_notebook_dir = s:vimwiki_dir . "/wiki"
-let s:vimwiki_journal_dir = s:vimwiki_dir . "~/.vim/journal"
+" WIKI SETTINGS
+let g:wiki_root = '~/.vim/wiki'
+let g:wiki_filetypes = ['md']
+let g:wiki_link_extension = '.md'"
+let g:wiki_global_load = 0
+let g:wiki_link_target_type = 'md'
 
-" Kill these so I can use tab for changing buffers
-nmap <Plug>NoVimwikiPrevLink <Plug>VimwikiPrevLink 
-nmap <Plug>NoVimwikiNextLink <Plug>VimwikiNextLink 
+" Function for creating link url
+function WikiMapLink(text) abort
+    return substitute(tolower(a:text), '\s\+', '-', 'g')
+endfunction
+let g:wiki_map_link_create = 'WikiMapLink'
 
-" Filetypes enabled for
-let g:vimwiki_filetypes = ['markdown']
-let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_global_ext = 0
-let s:vimwiki_dir = "~/.vim/roam/"
-let g:vimwiki_list = [{'path': s:vimwiki_dir . "wiki",
-            \ 'links_space_char': '-',
-            \ 'template_path': s:vimwiki_dir . "templates",
-            \ 'path_html': s:vimwiki_dir . "html",
-            \ 'html_filename_parameterization': 1,
-            \ 'custom_wiki2html': 'vimwiki_markdown',
-            \ 'template_ext': '.tpl',
-            \ 'syntax': 'markdown',
-            \ 'ext': '.md',
-            \ 'markdown_link_ext': 1,
-            \ },
-            \ {'path': s:vimwiki_journal_dir,
-            \ 'links_space_char': '_',
-            \ 'syntax': 'markdown',
-            \ 'ext': '.md.asc'}]
+let g:wiki_templates = [
+      \ { 'match_func': {x -> v:true},
+      \   'source_filename': '/Users/jeff/.vim/wiki/.template.md'},
+      \]
+
+" Functions for new note template
+function! WikiPathToLink(ctx, filename) abort
+    " The origin name will be given with surrounding apostrophes
+    " If it's empty, don't give a backlink
+    if a:filename ==# "''"
+        return ""
+    endif
+    let l:linkname = substitute(a:filename, "'", "", "g")
+    let l:linkurl = substitute(fnamemodify(l:linkname, ":p"), 
+        \ fnamemodify(expand(g:wiki_root), ":p"), "", "")
+    return wiki#link#template(l:linkurl, fnamemodify(expand(l:linkname), ':t'))
+endfunction
+
+function! WikiNameToTitle(ctx, text) abort
+    let l:title = substitute(a:text, "-", " ", "g")
+    let l:title = join(map(split(l:title), {_, x -> toupper(x[0]) . strpart(x, 1)}))
+    return l:title
+endfunction
+
+function! WikiRemoveDateDashes(ctx, date) abort
+    return substitute(a:date, "-", "", "g")
+endfunction
+
+let g:wiki_export = {
+    \ 'args' : '',
+    \ 'from_format' : 'markdown',
+    \ 'ext' : 'pdf',
+    \ 'link_ext_replace': v:false,
+    \ 'view' : v:true,
+    \ 'output': "../wiki_pdf/",
+    \}
+
+"
+" CRYPT SETTINGS
+"
+let g:crypt_root = "~/.vim/journal"
 
 "
 " COC SETTINGS
@@ -786,6 +780,9 @@ function! s:check_back_space() abort
  let col = col('.') - 1
  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+" Fix for broken isort-on-save
+au BufWritePre *.py :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 """ SNIPPETS """
 " Use <C-l> for trigger snippet expand.
@@ -881,8 +878,8 @@ let g:startify_bookmarks = [
             \ { 'p': '~/Projects' },
             \ { 'a': '~/.bash_aliases' },
             \ { 'b': '~/.bash_profile' },
-            \ { 'w': '~/.vim/vimroam/wiki/index.md' },
-            \ { 'J': '~/.vim/journal/index.md.asc' },
+            \ { 'w': '~/.vim/wiki/index.md' },
+            \ { 'J': '~/.vim/wiki/journal/index.md.asc' },
             \ ]
 
 let g:startify_enable_special = 0
@@ -988,8 +985,32 @@ let g:far#enable_undo=1
 let g:windowswap_map_keys = 0 "prevent default bindings
 
 "
-" MARKDOWN-PREVIEW
+" MARKDOWN SETTINGS
 "
+"Turn spellcheck on for markdown files
+augroup auto_spellcheck
+   autocmd!
+   autocmd BufNewFile,BufRead *.md setlocal spell wrap linebreak
+   autocmd BufNewFile,BufRead *.md nnoremap <buffer> j gj
+   autocmd BufNewFile,BufRead *.md nnoremap <buffer> k gk
+   autocmd BufNewFile,BufRead *.md xnoremap <buffer> j gj
+   autocmd BufNewFile,BufRead *.md xnoremap <buffer> k gk
+   autocmd BufNewFile,BufRead *.md inoremap <silent> <buffer> <script> <expr> <CR> MDIsAnEmptyQuote() \|\| MDIsAnEmptyListItem() ? '<C-O>:normal 0D<CR>' : '<CR>'
+   autocmd BufNewFile,BufRead *.md nnoremap <buffer> <leader>x :call markdown#SwitchStatus()<CR>
+   autocmd BufNewFile,BufRead *.md xnoremap <buffer> <leader>x :call markdown#SwitchStatus()<CR>
+augroup END
+
+
+function! MDIsAnEmptyListItem()
+  return getline('.') =~ '\v^\s*%([-*+]|\d\.)\s*$'
+endfunction
+
+function! MDIsAnEmptyQuote()
+  return getline('.') =~ '\v^\s*(\s?\>)+\s*$'
+endfunction
+
+let g:markdown_enable_mappings = 0
+let g:markdown_enable_conceal = 1
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
