@@ -25,20 +25,20 @@ fi
 if [ ! -f ~/.config/nvim/init.vim ]; then
     mkdir -p ~/.config/nvim
     if [ -f ~/.nvim_init ]; then
-        cp ~/.nvim_init ~/.config/nvim/init.vim
+        ln -s ~/.nvim_init ~/.config/nvim/init.vim
     fi
 fi
 
 if [ ! -f ~/.config/nvim/coc-settings.json ]; then
     if [ -f ~/.coc-settings.json ]; then
-        cp ~/.coc-settings.json ~/.config/nvim/coc-settings.json
+        ln -s ~/.coc-settings.json ~/.config/nvim/coc-settings.json
     fi
 fi
 
 if [ ! -f ~/.vim/coc-settings.json ]; then
     mkdir -p ~/.vim
     if [ -f ~/.coc-settings.json ]; then
-        cp ~/.coc-settings.json ~/.vim/coc-settings.json
+        ln -s ~/.coc-settings.json ~/.vim/coc-settings.json
     fi
 fi
 
@@ -61,10 +61,10 @@ if [ ! -f ~/.timezone ]; then
 fi
 
 # Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
-if [ ! -f ~/.vim/snips/python.snippets ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
-    if [ -d ~/.vim/snips ]; then
-        cp ~/.rc4me/jeffmm_dotfiles/snips/* ~/.vim/snips
-    else
-        cp -r ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
-    fi
+if [ ! -d ~/.vim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
+    ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
+fi
+
+if [ ! -d ~/.config/nvim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
+    ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.config/nvim/snips
 fi
