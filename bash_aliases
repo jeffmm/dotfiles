@@ -17,6 +17,7 @@ alias octave="octave --no-gui-libs"
 alias gst="git status"
 alias dps='docker ps --format "table {{.Names}}\t{{.Ports}}"'
 alias cdp="cd ~/Projects"
+alias cdc="cd ~/capsule"
 
 # Check if pypi-simple-search is installed
 if $(command -v pip-pss &> /dev/null); then
