@@ -9,6 +9,8 @@ export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
 export TZ=America/Denver
 PS1="\u:\W$ "
+export PYTORCH_ENABLE_MPS_FALLBACK=1
+
 
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
@@ -68,3 +70,19 @@ fi
 if [ ! -d ~/.config/nvim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
     ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.config/nvim/snips
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/jeff/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/jeff/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jeff/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/jeff/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

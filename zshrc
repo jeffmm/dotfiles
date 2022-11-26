@@ -25,18 +25,20 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
+export PYTORCH_ENABLE_MPS_FALLBACK=1
 
 autoload -U colors && colors
 PS1="\u:\W$ "
 PS1="%B%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
 
+
 # History in cache directory:
+HISTFILE=~/.cache/zsh/history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
 setopt share_history
 setopt inc_append_history
 setopt hist_ignore_all_dups
-HISTSIZE=100000
-SAVEHIST=$HISTSIZE
-HISTFILE=~/.cache/zsh/history
 
 # Basic auto/tab complete:
 autoload -U compinit
@@ -172,3 +174,19 @@ if [ ! -f ~/.timezone ]; then
     fi
     echo $TZ > ~/.timezone
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/jeff/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/jeff/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jeff/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/jeff/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
