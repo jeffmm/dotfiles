@@ -1,3 +1,5 @@
 [user]
 name = Jeff Moore
 email = jmoore@manifold.ai
+[safe]
+directory = /mnt
