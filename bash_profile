@@ -1,7 +1,7 @@
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=vim
+export VISUAL=vim
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 export GPG_TTY=$(tty)
