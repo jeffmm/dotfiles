@@ -11,8 +11,7 @@ fi
 alias glog="git log --pretty=format:'%C(yellow)%h %Cred%an %Cblue%ad %Cgreen%d %Creset%s' --date=relative --graph"
 alias gb="git branch -v --sort=-committerdate"
 alias tn="tail nohup.out"
-alias vi='nvim'
-alias vim="nvim"
+alias vi='vim'
 alias octave="octave --no-gui-libs"
 alias gst="git status"
 alias dps='docker ps --format "table {{.Names}}\t{{.Ports}}"'
