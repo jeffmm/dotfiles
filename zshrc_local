@@ -24,7 +24,7 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/.local/bin:$GOPATH/bin:/usr/local/sbin:$PATH
 
 autoload -U colors && colors
 PS1="\u:\W$ "
