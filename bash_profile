@@ -7,6 +7,7 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 export GPG_TTY=$(tty)
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:/usr/local/sbin:$PATH
+export PATH=/opt/homebrew/bin:$HOME/.local/bin:$PATH
 export TZ=America/Denver
 PS1="\u:\W$ "
 

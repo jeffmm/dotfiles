@@ -27,8 +27,7 @@ export GOPATH=$HOME/go
 export PATH=$HOME/.local/bin:$GOPATH/bin:/usr/local/sbin:$PATH
 
 autoload -U colors && colors
-PS1="\u:\W$ "
-PS1="%B%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
+PS1="%B%{$fg[black]%}<%B%{$fg[red]%}$(hostname)%B%{$fg[black]%}>%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
 
 # History in cache directory:
 setopt share_history
@@ -123,37 +122,6 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 if $(command -v terraform &> /dev/null); then
     complete -C /usr/local/bin/terraform terraform
 fi
-
-if [ ! -f ~/.config/nvim/init.vim ]; then
-    mkdir -p ~/.config/nvim
-    if [ -f ~/.nvim_init ]; then
-        ln -s ~/.nvim_init ~/.config/nvim/init.vim
-    fi
-fi
-
-if [ ! -f ~/.config/nvim/coc-settings.json ]; then
-    if [ -f ~/.coc-settings.json ]; then
-        ln -s ~/.coc-settings.json ~/.config/nvim/coc-settings.json
-    fi
-fi
-
-if [ ! -f ~/.vim/coc-settings.json ]; then
-    mkdir -p ~/.vim
-    if [ -f ~/.coc-settings.json ]; then
-        ln -s ~/.coc-settings.json ~/.vim/coc-settings.json
-    fi
-fi
-
-# Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
-if [ ! -d ~/.vim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
-    ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.vim/snips
-fi
-#
-# Import my vim snippets if using rc4me (TODO: add rc4me directory compatibility)
-if [ ! -d ~/.config/nvim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
-    ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.config/nvim/snips
-fi
-
 
 # Timezones
 export TZ=America/Denver
