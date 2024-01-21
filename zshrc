@@ -27,8 +27,7 @@ export GOPATH=$HOME/go
 export PATH=$HOME/.local/bin:$GOPATH/bin:/usr/local/sbin:$PATH
 
 autoload -U colors && colors
-PS1="%B%{$fg[black]%}<%B%{$fg[red]%}$(hostname)%B%{$fg[black]%}>%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
-
+PS1="%B%{$fg[black]%}<%B%{$fg[red]%}${HOSTNAME:-$(hostname -f)}%B%{$fg[black]%}>%{$fg[magenta]%}[%{$fg[blue]%}%~%{$fg[magenta]%}]%{$reset_color%}$%b "
 # History in cache directory:
 setopt share_history
 setopt inc_append_history
