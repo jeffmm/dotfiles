@@ -35,6 +35,9 @@ setopt hist_ignore_all_dups
 HISTSIZE=100000
 SAVEHIST=$HISTSIZE
 HISTFILE=~/.cache/zsh/history
+if [ ! -d ~/.cache/zsh ]; then
+		mkdir -p ~/.cache/zsh
+fi
 
 # Basic auto/tab complete:
 autoload -U compinit
