@@ -3,3 +3,5 @@ name = "Jeff Moore"
 email = "jmoore@manifold.ai"
 [safe]
 directory = /mnt
+[core]
+	editor = nvim

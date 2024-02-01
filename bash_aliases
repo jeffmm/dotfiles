@@ -120,35 +120,6 @@ make_toc_pdf() {
 	pandoc -N --template=/Users/jeff/Notes/work_wiki/latex_template.tex --variable mainfont="Palatino" --variable sansfont="Helvetica" --variable monofont="Menlo" --variable fontsize=12pt --variable version=2.0 $1 --pdf-engine=xelatex --toc -o ${1%%.md}.pdf
 }
 
-# todo() {
-# if [ -n "$1" ]; then
-# echo "$* TODO" >> ~/Drive/Notes/todo-list.vnote;
-# fi
-# grep -rh -I --color 'TODO\|XXX' ~/Drive/Notes | awk '{print "  "++c".", "\033[1;31m" $0 "\033[0m"}';
-# }
-
-# dun() {
-# lines=`todo | wc -l`;
-# re='^[0-9]+$';
-# if ! [[ $1 =~ $re ]]; then
-# echo "error: todo line number required" >&2;
-# return;
-# fi
-# if ! [ $1 -ge 1 -a $1 -le $lines ]; then
-# echo "error: todo line number non-existent">&2;
-# return;
-# fi
-# line=`grep -rh -I --color 'TODO\|XXX' ~/Drive/Notes | head -n $1 | tail -n 1`;
-# file=`grep -rl -I "$line" ~/Drive/Notes`;
-# n=`grep -rn "$line" ~/Drive/Notes | cut -d : -f 2 | tail -n 1`;
-# if `echo "$line" | grep -q TODO`; then
-# sed -i '' "${n}s/TODO/DONE/" "$file";
-# else
-# sed -i '' "${n}s/XXX/DONE/" "$file";
-# fi
-# grep -rh -I --color 'TODO\|XXX' ~/Drive/Notes | awk '{print "  "++c".", "\033[1;31m" $0 "\033[0m"}';
-# }
-
 # seed() {
 # if [ -n "$1" ]
 # then
@@ -349,41 +320,6 @@ setup_vimrc() {
 }
 
 export VENV_HOME="$HOME/.virtualenvs"
-[[ -d $VENV_HOME ]] || mkdir $VENV_HOME
-
-# $ lsvenv              # list virtual envs
-lsvenv() {
-	ls -1 $VENV_HOME
-}
-
-# $ venv myvirtualenv   # activates venv
-venv() {
-	if [ $# -eq 0 ]; then
-		echo "Please provide venv name"
-	else
-		source "$VENV_HOME/$1/bin/activate"
-	fi
-}
-
-# $ mkvenv myvirtualenv # creates venv under ~/.virtualenvs/
-mkvenv() {
-	if [ $# -eq 0 ]; then
-		echo "Please provide venv name"
-	else
-		python3 -m venv $VENV_HOME/$1
-	fi
-}
-
-# $ rmvenv myvirtualenv # removes venv
-rmvenv() {
-	if [ $# -eq 0 ]; then
-		echo "Please provide venv name"
-	else
-		rm -r $VENV_HOME/$1
-	fi
-}
-
-export VENV_HOME="$HOME/.virtualenvs"
 [[ -d "${VENV_HOME}" ]] || mkdir "${VENV_HOME}"
 
 # $ lsvenv              # list virtual envs
@@ -431,6 +367,8 @@ venv-install() {
 		grep PRIVATE_PYPI_URL ./.devcontainer/postCreateCommand.sh | sh
 		pip install -e ."[dev]"
 		pre-commit install
+		pip install ipykernel
+		ipython -m ipykernel install --user --name "${1}"
 		cd ..
 	fi
 }
