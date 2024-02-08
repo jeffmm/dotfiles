@@ -368,7 +368,7 @@ venv-install() {
 		pip install -e ."[dev]"
 		pre-commit install
 		pip install ipykernel
-		ipython -m ipykernel install --user --name "${1}"
+		python -m ipykernel install --user --name "${1}"
 		cd ..
 	fi
 }
