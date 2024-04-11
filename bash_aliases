@@ -319,7 +319,7 @@ setup_vimrc() {
 	echo "Environment setup complete."
 }
 
-export VENV_HOME="$HOME/.virtualenvs"
+export VENV_HOME="$HOME/Projects/.virtualenvs"
 [[ -d "${VENV_HOME}" ]] || mkdir "${VENV_HOME}"
 
 # $ lsvenv              # list virtual envs
@@ -379,8 +379,8 @@ spark-install() {
 	else
 		sudo /usr/local/spark/sbin/stop-master.sh
 		sudo /usr/local/spark/sbin/stop-worker.sh
-		export PYSPARK_PYTHON=$HOME/.virtualenvs/$1/bin/python
-		export PYSPARK_DRIVER_PYTHON=$HOME/.virtualenvs/$1/bin/python
+		export PYSPARK_PYTHON=$VENV_HOME/$1/bin/python
+		export PYSPARK_DRIVER_PYTHON=$VENV_HOME/$1/bin/python
 		sudo /usr/local/spark/sbin/start-master.sh
 		sudo /usr/local/spark/sbin/start-worker.sh spark://vscode-container:7077
 	fi
