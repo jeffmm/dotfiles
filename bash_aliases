@@ -18,6 +18,7 @@ alias dps='docker ps --format "table {{.Names}}\t{{.Ports}}"'
 alias cdp="cd ~/Projects"
 alias cdc="cd ~/capsule"
 alias icat="kitty +kitten icat"
+alias gdvim="nvim --listen /tmp/godot.pipe"
 
 # Check if pypi-simple-search is installed
 if $(command -v pip-pss &>/dev/null); then

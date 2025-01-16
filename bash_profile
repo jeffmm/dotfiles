@@ -69,3 +69,4 @@ fi
 if [ ! -d ~/.config/nvim/snips ] && [ -d ~/.rc4me/jeffmm_dotfiles/snips ]; then
     ln -s ~/.rc4me/jeffmm_dotfiles/snips ~/.config/nvim/snips
 fi
+. "$HOME/.cargo/env"
