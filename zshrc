@@ -37,7 +37,6 @@ plugins=(
     git
     docker
     docker-compose
-    vi-mode
     zsh-autosuggestions
     zsh-syntax-highlighting
     fzf
