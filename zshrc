@@ -60,6 +60,14 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat -
 # Load local/private definitions
 [[ ! -f ~/.bash_local ]] || source ~/.bash_local
 
+export NVM_DIR="$HOME/.nvm"
+# First check for linux install
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Now check for OSX
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 # Custom key bindings for fzf integration
 bindkey '^f' fzf-file-widget
 bindkey '^r' fzf-history-widget
