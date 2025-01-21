@@ -81,6 +81,9 @@ setopt PUSHD_SILENT        # Do not print the directory stack after pushd or pop
 zstyle ':completion:*' menu select  # Enable menu-style completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # Case-insensitive completion
 
+bindkey -v  # Enable vim mode
+
+export PATH="$HOME/.local/bin:$PATH"
 
 # Load Powerlevel10k config if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
