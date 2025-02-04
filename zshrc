@@ -32,6 +32,12 @@ bindkey '^w' backward-kill-word
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 
+# These are installed by default on debian
+if command -v apt > /dev/null; then
+	export DISABLE_FZF_AUTO_COMPLETION="true"
+	export DISABLE_FZF_KEY_BINDINGS="true"
+fi
+
 # Plugins
 plugins=(
     git
