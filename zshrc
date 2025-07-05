@@ -59,6 +59,7 @@ source $ZSH/oh-my-zsh.sh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --style=numbers --color=always {}'"
+export LESS="-iMFXSx4R"
 
 # Load global aliases
 [[ ! -f ~/.bash_aliases ]] || source ~/.bash_aliases
@@ -93,3 +94,4 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Load Powerlevel10k config if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export PATH="$HOME/.lua/bin:$PATH"
