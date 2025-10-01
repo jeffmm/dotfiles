@@ -5,3 +5,5 @@ email = "jeffreymm@protonmail.com"
 directory = /mnt
 [core]
 	editor = nvim
+[init]
+	defaultBranch = main

@@ -91,7 +91,11 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # Case-insensitive co
 bindkey -v  # Enable vim mode
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.lua/bin:$PATH"
+
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
 
 # Load Powerlevel10k config if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-export PATH="$HOME/.lua/bin:$PATH"
